@@ -36,18 +36,20 @@ def converter_para_gemini(historico):
 
 
 def gerar_resposta():
-    resposta = cliente.models.generate_content(
-        model=MODELO,
-        contents=converter_para_gemini(st.session_state.historico),
-        config=types.GenerateContentConfig(
-            system_instruction=INSTRUCAO_SISTEMA,
-            temperature=0.4,
+    try:
+        resposta = cliente.models.generate_content(
+            model=MODELO,
+            contents=converter_para_gemini(st.session_state.historico),
+            config=types.GenerateContentConfig(
+                system_instruction=INSTRUCAO_SISTEMA,
+                temperature=0.4,
         )
     )
 
-
-    return resposta.text
-
+   
+        return resposta.text
+    except:
+        return "ocorreu um erro  ao se comunicar com gemini,tente novamente mais tarde"
 
 st.set_page_config(page_title="Chatbot Mal Educado", page_icon="🦎")
 st.title("Chatbot com Gemini 🦎")
